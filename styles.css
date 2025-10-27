@@ -40,6 +40,7 @@ body {
     color: var(--dark);
     line-height: 1.6;
     overflow-x: hidden;
+    position: relative;
 }
 
 .container {
@@ -65,6 +66,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    position: relative;
 }
 
 .logo {
@@ -488,6 +490,7 @@ body {
     border-radius: 20px;
     padding: 32px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .chart-header {
@@ -503,15 +506,17 @@ body {
     align-items: flex-end;
     height: 300px;
     justify-content: center;
+    flex-wrap: nowrap;
 }
 
 .chart-bar {
     display: flex;
     align-items: flex-end;
+    flex: 0 0 auto;
 }
 
 .bar {
-    min-width: 100px;
+    width: 100px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -522,6 +527,22 @@ body {
     font-weight: 600;
     transition: all 0.3s;
     animation: barGrow 1s ease;
+}
+
+.bar-1 {
+    width: 150px;
+}
+
+.bar-2 {
+    width: 120px;
+}
+
+.bar-3 {
+    width: 170px;
+}
+
+.bar-4 {
+    width: 110px;
 }
 
 @keyframes barGrow {
@@ -544,11 +565,14 @@ body {
     margin-bottom: 8px;
     opacity: 0.95;
     font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
 }
 
 .bar-value {
     font-size: 18px;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 /* Security Section */
@@ -772,10 +796,96 @@ body {
     color: var(--gray-light);
 }
 
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--dark);
+    padding: 8px;
+    z-index: 1001;
+}
+
+.mobile-cta {
+    display: none;
+}
+
+.desktop-cta {
+    display: inline-block;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
 /* Responsive Design */
 @media (max-width: 968px) {
-    .nav-menu {
+    .nav {
+        position: relative;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .desktop-cta {
         display: none;
+    }
+
+    .mobile-cta {
+        display: block;
+        margin-top: 16px;
+    }
+
+    .mobile-cta .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--white);
+        flex-direction: column;
+        padding: 80px 20px 20px;
+        gap: 24px;
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        z-index: 1000;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 12px 0;
+        font-size: 18px;
     }
     
     .hero-content {
@@ -789,6 +899,12 @@ body {
     
     .hero-cta {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-cta .btn {
+        width: 100%;
+        max-width: 300px;
     }
     
     .hero-stats {
@@ -804,6 +920,41 @@ body {
         gap: 40px;
     }
 
+    .chart-mockup {
+        padding: 24px;
+    }
+
+    .chart-header {
+        font-size: 18px;
+        margin-bottom: 24px;
+    }
+
+    .chart-bars {
+        gap: 12px;
+        height: 280px;
+    }
+
+    .bar {
+        width: 80px;
+        padding: 16px 12px;
+    }
+
+    .bar-1 {
+        width: 90px;
+    }
+
+    .bar-2 {
+        width: 75px;
+    }
+
+    .bar-3 {
+        width: 100px;
+    }
+
+    .bar-4 {
+        width: 70px;
+    }
+
     .section-header h2 {
         font-size: 32px;
     }
@@ -813,23 +964,86 @@ body {
     }
 }
 
+@media (max-width: 768px) {
+    .chart-bars {
+        gap: 10px;
+        height: 260px;
+    }
+
+    .bar {
+        width: 70px;
+        padding: 14px 10px;
+    }
+
+    .bar-1 {
+        width: 80px;
+    }
+
+    .bar-2 {
+        width: 65px;
+    }
+
+    .bar-3 {
+        width: 90px;
+    }
+
+    .bar-4 {
+        width: 60px;
+    }
+
+    .bar-label {
+        font-size: 12px;
+    }
+
+    .bar-value {
+        font-size: 15px;
+    }
+}
+
 @media (max-width: 640px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    .nav {
+        padding: 16px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        font-size: 24px;
+    }
+    
+    .hero {
+        padding: 120px 0 60px;
+    }
+
     .hero h1 {
-        font-size: 32px;
+        font-size: 28px;
+        line-height: 1.2;
     }
     
     .hero-description {
         font-size: 16px;
     }
+
+    .badge {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
     
     .phone-mockup {
-        width: 280px;
-        height: 560px;
+        width: 260px;
+        height: 520px;
     }
     
     .btn-large {
-        padding: 14px 28px;
-        font-size: 16px;
+        padding: 14px 24px;
+        font-size: 15px;
+        width: 100%;
     }
     
     .features-grid,
@@ -841,10 +1055,136 @@ body {
     
     .hero-cta {
         flex-direction: column;
+        width: 100%;
     }
     
     .cta-buttons {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .section-header h2 {
+        font-size: 26px;
+    }
+
+    .section-header p {
+        font-size: 16px;
+    }
+
+    .feature-card {
+        padding: 24px;
+    }
+
+    .chart-bars {
+        height: 250px;
+        gap: 8px;
+        padding: 0 8px;
+    }
+
+    .bar {
+        width: 60px;
+        padding: 12px 8px;
+    }
+
+    .bar-1 {
+        width: 68px;
+    }
+
+    .bar-2 {
+        width: 58px;
+    }
+
+    .bar-3 {
+        width: 75px;
+    }
+
+    .bar-4 {
+        width: 55px;
+    }
+
+    .bar-label {
+        font-size: 11px;
+    }
+
+    .bar-value {
+        font-size: 14px;
+    }
+
+    .chart-header {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .chart-mockup {
+        padding: 20px 16px;
+    }
+
+    .insights-list li {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 375px) {
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .phone-mockup {
+        width: 240px;
+        height: 480px;
+    }
+
+    .nav-menu {
+        width: 260px;
+    }
+
+    .section-header h2 {
+        font-size: 24px;
+    }
+
+    .chart-bars {
+        height: 220px;
+        gap: 6px;
+    }
+
+    .bar {
+        width: 52px;
+        padding: 10px 6px;
+    }
+
+    .bar-1 {
+        width: 58px;
+    }
+
+    .bar-2 {
+        width: 50px;
+    }
+
+    .bar-3 {
+        width: 64px;
+    }
+
+    .bar-4 {
+        width: 48px;
+    }
+
+    .bar-label {
+        font-size: 10px;
+        word-break: break-word;
+        text-align: center;
+    }
+
+    .bar-value {
+        font-size: 12px;
+    }
+
+    .chart-header {
+        font-size: 15px;
     }
 }
 

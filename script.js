@@ -19,10 +19,44 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Mobile Menu Toggle
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            const isActive = navMenu.classList.contains('active');
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            menuToggle.textContent = isActive ? '☰' : '✕';
+            
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = isActive ? '' : 'hidden';
+        });
+
+        // Close menu when clicking on overlay
+        menuOverlay.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            menuToggle.textContent = '☰';
+            document.body.style.overflow = '';
+        });
+
+        // Close menu when clicking on a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
+                menuToggle.textContent = '☰';
+                document.body.style.overflow = '';
+            });
+        });
+    }
     
     // Smooth scroll for navigation links
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-    
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -44,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
     
     // Add animation on scroll
     const observerOptions = {
@@ -82,45 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     chartBars.forEach(bar => {
         chartObserver.observe(bar);
-    });
-    
-    // Mobile menu toggle (if needed)
-    const createMobileMenu = () => {
-        const nav = document.querySelector('.nav');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        if (window.innerWidth <= 968 && !document.querySelector('.mobile-menu-toggle')) {
-            const menuToggle = document.createElement('button');
-            menuToggle.classList.add('mobile-menu-toggle');
-            menuToggle.innerHTML = '☰';
-            menuToggle.style.cssText = `
-                background: none;
-                border: none;
-                font-size: 28px;
-                cursor: pointer;
-                color: var(--dark);
-            `;
-            
-            menuToggle.addEventListener('click', () => {
-                navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-                navMenu.style.flexDirection = 'column';
-                navMenu.style.position = 'absolute';
-                navMenu.style.top = '70px';
-                navMenu.style.right = '20px';
-                navMenu.style.background = 'white';
-                navMenu.style.padding = '20px';
-                navMenu.style.borderRadius = '10px';
-                navMenu.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
-            });
-            
-            nav.appendChild(menuToggle);
-        }
-    };
-    
-    createMobileMenu();
-    window.addEventListener('resize', createMobileMenu);
-    
-    // Parallax effect for hero section
+    });    // Parallax effect for hero section
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
         const phoneElement = document.querySelector('.phone-mockup');
